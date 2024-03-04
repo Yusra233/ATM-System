@@ -1,66 +1,69 @@
 package org.example;
 
-public class CreditAccount extends Account{
-    private static int creditamount =0;
+public class CreditAccount extends Account {
+    private int creditAmount;
 
-    public CreditAccount() {
-    }
-
-    public CreditAccount(int password, String accountname, int amount) {
-        super(password, accountname, amount);
+    public CreditAccount(int creditAmount) {
+        this.creditAmount = creditAmount;
     }
 
     @Override
-    public String CheckBalance() {
-        return "The total amount for Credit Account: "+creditamount;
+    public String checkbalance() {
+        return "The total amount for Credit Account: " + creditAmount;
 
     }
 
     @Override
-    public String Deposit(int amount) {
-        if(amount<0){
+    public String deposit(int amount) {
+        if (amount < 0) {
             return "Operation Failed for Credit Account!!";
-        }else {
-            creditamount = creditamount+amount;
+        } else {
+            creditAmount = creditAmount + amount;
             return "Deposit Done Successfully for Credit Account!";
         }
     }
 
     @Override
-    public String Withdraw(int amount) {
-        if(amount>creditamount){
+    public String withdraw(int amount) {
+        if (amount > creditAmount) {
             return "Operation Failed for Credit Account!!";
-        }else {
-            creditamount = creditamount-amount;
+        } else {
+            creditAmount = creditAmount - amount;
             return "Withdraw Done Successfully for Credit Account! ";
         }
     }
 
     @Override
-    public String Transfer(String n, String accountname, int amount) {
-        if(amount>creditamount){
-            return "Fail !!";
+    public String transfer(SalaryAccount salaryAccount, int amount){
+        if(amount<creditAmount){
+            creditAmount=creditAmount-amount;
+            int s= salaryAccount.getSalaryAmount()+amount;
+            salaryAccount.setSalaryAmount(s);
+            return "Transfer Done Successfully, From Credit To Salary Account";
         }
         else {
-            if(accountname.equals("saving")){
-                creditamount = creditamount - amount;
-                int s = SavingAccount.getSavingamount()+amount;
-                SavingAccount.setSavingamount(s);
-            } else if (accountname.equals("salary")) {
-                creditamount= creditamount - amount;
-                int s = SalaryAccount.getSalaryamount()+amount;
-                SalaryAccount.setSalaryamount(s);
-            }
-
-            return "Done Successfully";
+            return "Fail";
         }
     }
 
-    public static void setCreditamount(int creditamount) {
-        CreditAccount.creditamount = creditamount;
+    @Override
+    public String transfer(SavingAccount savingAccount, int amount){
+        if(amount<creditAmount){
+            creditAmount=creditAmount-amount;
+            int s= savingAccount.getSavingAmount()+amount;
+            savingAccount.setSavingAmount(s);
+            return "Transfer Done Successfully, From Credit To Saving Account";
+        }
+        else {
+            return "Fail";
+        }
+    }
+    public int getCreditAmount() {
+        return creditAmount;
     }
 
-    public static int getCreditamount() {
-        return creditamount;
+    public void setCreditAmount(int creditAmount) {
+        this.creditAmount = creditAmount;
     }
+
 }
