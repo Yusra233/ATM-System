@@ -1,64 +1,66 @@
 package org.example;
 
 public class SavingAccount extends Account{
-    private static int savingamount =0;
+    private int savingAmount;
 
-    public SavingAccount() {
-    }
-
-    public SavingAccount(int password, String accountname, int amount) {
-        super(password, accountname, amount);
+    public SavingAccount(int savingAmount) {
+        this.savingAmount = savingAmount;
     }
 
     @Override
-    public String CheckBalance() {
-        return "The total amount for Saving Account: "+savingamount;
+    public String checkbalance() {
+        return "The total amount for Saving Account: "+savingAmount;
     }
     @Override
-    public String Deposit(int amount) {
+    public String deposit(int amount) {
         if(amount<0){
             return "Operation Failed for Saving Account!!";
         }else {
-            savingamount = savingamount+amount;
+            savingAmount = savingAmount+amount;
             return "Deposit Done Successfully for Saving Account!";
         }
     }
 
     @Override
-    public String Withdraw(int amount) {
-        if(amount>savingamount){
+    public String withdraw(int amount) {
+        if(amount>savingAmount){
             return "Operation Failed for Saving Account!!";
         }else {
-            savingamount = savingamount-amount;
+            savingAmount = savingAmount-amount;
             return "Withdraw Done Successfully for Saving Account! ";
+        }
+    }
+    @Override
+    public String transfer(SalaryAccount salaryAccount, int amount){
+        if(amount<savingAmount){
+            savingAmount=savingAmount-amount;
+            int s= salaryAccount.getSalaryAmount()+amount;
+            salaryAccount.setSalaryAmount(s);
+            return "Transfer Done Successfully, From Saving To Salary Account";
+        }
+        else {
+            return "Fail";
         }
     }
 
     @Override
-    public String Transfer(String n, String accountname, int amount) {
-        if(amount>savingamount){
-            return "Fail !!";
+    public String transfer(CreditAccount creditAccount, int amount){
+        if(amount<savingAmount){
+            savingAmount=savingAmount-amount;
+            int s= creditAccount.getCreditAmount()+amount;
+            creditAccount.setCreditAmount(s);
+            return "Transfer Done Successfully, From Saving To Credit Account";
         }
         else {
-            if(accountname.equals("salary")){
-                savingamount = savingamount - amount;
-                int s = SalaryAccount.getSalaryamount()+amount;
-                SalaryAccount.setSalaryamount(s);
-            } else if (accountname.equals("credit")) {
-                savingamount = savingamount - amount;
-                int s = CreditAccount.getCreditamount()+amount;
-                CreditAccount.setCreditamount(s);
-            }
-
-            return "Done Successfully";
+            return "Fail";
         }
     }
 
-    public static void setSavingamount(int savingamount) {
-        SavingAccount.savingamount = savingamount;
+    public int getSavingAmount() {
+        return savingAmount;
     }
 
-    public static int getSavingamount() {
-        return savingamount;
+    public void setSavingAmount(int savingAmount) {
+        this.savingAmount = savingAmount;
     }
 }
