@@ -1,18 +1,23 @@
 package org.example;
 
-public abstract class Account {
+public  class Account {
     private int password;
-    private String accountname;
-    private int amount;
+    private int amount ;
+
+    SavingAccount savingAccount;
+    SalaryAccount salaryAccount;
+    CreditAccount creditAccount;
 
 
     public Account(){}
 
-    public Account(int password,String accountname,int amount) {
-        super();
+    public Account(int password,SavingAccount savingAccount,SalaryAccount salaryAccount,CreditAccount creditAccount) {
         this.password = password;
-        this.accountname=accountname;
-        this.amount=amount;
+        this.amount=salaryAccount.getAmount()+savingAccount.getAmount()+creditAccount.getCreditAmount();
+        this.creditAccount=creditAccount;
+        this.salaryAccount=salaryAccount;
+        this.savingAccount=savingAccount;
+
     }
 
     public int getAmount() {
@@ -31,21 +36,30 @@ public abstract class Account {
         this.password = password;
     }
 
-    public String getAccountname() {
-        return accountname;
+    public  String checkbalance(){
+        return null;
     }
 
-    public void setAccountname(String accountname) {
-        this.accountname = accountname;
+    public  String deposit(int amount)
+    {
+        return null;
     }
 
-   public abstract String CheckBalance();
+    public  String withdraw(int amount){
+        return null;
+    }
 
-    public abstract String Deposit(int amount);
-
-    public abstract String Withdraw(int amount);
-
-    public abstract String Transfer(String n, String accountname,int amount);
+    public  String transfer(SalaryAccount salaryAccount, int amount){
+        return null;
+    }
+    public  String transfer(SavingAccount savingAccount, int amount)
+    {
+        return null;
+    }
+    public  String transfer(CreditAccount creditAccount, int amount)
+    {
+        return null;
+    }
 
 
 
